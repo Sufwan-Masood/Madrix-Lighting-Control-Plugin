@@ -1,0 +1,93 @@
+{
+  "type": "root",
+  "widgets": [
+    {
+      "type": "fader",
+      "x": 40,
+      "y": 40,
+      "w": 60,
+      "h": 250,
+      "address": "/Page1/Fader201",
+      "id": "fader201",
+      "label": "Fader 201",
+      "range": [0, 1]
+    },
+    {
+      "type": "fader",
+      "x": 120,
+      "y": 40,
+      "w": 60,
+      "h": 250,
+      "address": "/Page1/Fader202",
+      "id": "fader202",
+      "label": "Fader 202",
+      "range": [0, 1]
+    },
+    {
+      "type": "fader",
+      "x": 200,
+      "y": 40,
+      "w": 60,
+      "h": 250,
+      "address": "/Page1/FaderMaster",
+      "id": "faderMaster",
+      "label": "Master",
+      "range": [0, 1]
+    },
+    {
+      "type": "button",
+      "x": 300,
+      "y": 40,
+      "w": 120,
+      "h": 40,
+      "address": "/cmd",
+      "id": "goBtn",
+      "label": "Go+ Exec 1.101",
+      "value": "Go+ Exec 1.101"
+    },
+    {
+      "type": "button",
+      "x": 300,
+      "y": 90,
+      "w": 120,
+      "h": 40,
+      "address": "/cmd",
+      "id": "pauseBtn",
+      "label": "Pause Exec 1.101",
+      "value": "Pause Exec 1.101"
+    },
+    {
+      "type": "button",
+      "x": 300,
+      "y": 140,
+      "w": 120,
+      "h": 40,
+      "address": "/cmd",
+      "id": "stopBtn",
+      "label": "Stop Exec 1.101",
+      "value": "Stop Exec 1.101"
+    },
+    {
+      "type": "button",
+      "x": 300,
+      "y": 200,
+      "w": 120,
+      "h": 40,
+      "address": "/status",
+      "id": "bootBtn",
+      "label": "Send Boot",
+      "value": "boot"
+    },
+    {
+      "type": "label",
+      "x": 300,
+      "y": 260,
+      "w": 150,
+      "h": 30,
+      "address": "/status/exec",
+      "id": "execStatus",
+      "label": "Status:",
+      "value": ""
+    }
+  ]
+}
