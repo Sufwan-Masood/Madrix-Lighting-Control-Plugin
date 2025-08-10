@@ -11,7 +11,7 @@ class MADRIXIntegration(sp.BaseModule):
         "name": "MADRIX Integration",
         "category": "Lighting Control",
         "description": "Control MADRIX lighting software via OSC",
-        "author": "Isufwan",
+        "author": "STAGE PRECISION",
         "keywords": "madrix, osc, lighting",
         "version": (1, 0),
         "spVersion": (1, 9, 0),
@@ -48,13 +48,13 @@ class MADRIXIntegration(sp.BaseModule):
             self.addAction("Initialize", "Connection", self.initialize_osc)
 
             # Audio/Input Actions
-            self.osc.oscAction(self, "Set Input AGC", "Audio", "Enable or disable Automatic Gain Control", OSCTypes.Int,
+            self.osc.oscAction(self, "Set Input AGC", "Audio", "Enable or disable Automatic Gain Control", OSCTypes.Bool, # changed to Bool for consistency
                                "/Audio/Input/Agc", "{B, AGC, 0, 0;1, Enable;Disable}")
             self.osc.oscAction(self, "Set Input Level", "Audio", "Set input audio level", OSCTypes.Float,
                                "/Audio/Input/Level", "{F, Level, 50, 0, 100, %}")
             self.osc.oscAction(self, "Set Input Level Offset", "Audio", "Set input level offset", OSCTypes.Float,
                                "/Audio/Input/Level/Offset", "{F, Offset, 0, -100, 100, %}")
-            self.osc.oscAction(self, "Mute Input", "Audio", "Mute or unmute input audio", OSCTypes.Int,
+            self.osc.oscAction(self, "Mute Input", "Audio", "Mute or unmute input audio", OSCTypes.Bool, #here changed to Bool for consistency
                                "/Audio/Input/Mute", "{B, Mute, 0, 0;1, Off;On}")
 
             # Audio/Output Actions
@@ -62,17 +62,17 @@ class MADRIXIntegration(sp.BaseModule):
                                "/Audio/Output/Level", "{F, Level, 50, 0, 100, %}")
             self.osc.oscAction(self, "Set Output Level Offset", "Audio", "Set output level offset", OSCTypes.Float,
                                "/Audio/Output/Level/Offset", "{F, Offset, 0, -100, 100, %}")
-            self.osc.oscAction(self, "Mute Output", "Audio", "Mute or unmute output audio", OSCTypes.Int,
+            self.osc.oscAction(self, "Mute Output", "Audio", "Mute or unmute output audio", OSCTypes.Bool, # changed to Bool for consistency
                                "/Audio/Output/Mute", "{B, Mute, 0, 0;1, Off;On}")
 
             # Output Actions
-            self.osc.oscAction(self, "Freeze Output", "Output", "Freeze or unfreeze output", OSCTypes.Int,
+            self.osc.oscAction(self, "Freeze Output", "Output", "Freeze or unfreeze output", OSCTypes.Bool, # changed to Bool for consistency
                                "/Output/Freeze", "{B, Freeze, 0, 0;1, Off;On}")
             self.osc.oscAction(self, "Set Master Level", "Output", "Set master intensity", OSCTypes.Int,
                                "/Output/Master", "{I, Level, 127, 0, 255}")
             self.osc.oscAction(self, "Set Master Offset", "Output", "Set master level offset", OSCTypes.Float,
                                "/Output/Master/Offset", "{F, Offset, 0, -100, 100, %}")
-            self.osc.oscAction(self, "Blackout", "Output", "Enable or disable blackout", OSCTypes.Int,
+            self.osc.oscAction(self, "Blackout", "Output", "Enable or disable blackout", OSCTypes.Bool, # changed to Bool for consistency
                                "/Output/Blackout", "{B, Blackout, 0, 0;1, Off;On}")
 
             # CueList Actions
@@ -82,12 +82,13 @@ class MADRIXIntegration(sp.BaseModule):
                                "/CueList/Index/Up")
             self.osc.oscAction(self, "Previous CueList", "CueList", "Move to previous cue list", OSCTypes.Bare,
                                "/CueList/Index/Down")
-            self.osc.oscAction(self, "Set Playback State", "CueList", "Set playback state", OSCTypes.Int,
-                               "/CueList/PlaybackState", "{A, State, 0, Stopped;Paused;Playing}")
-            self.osc.oscAction(self, "Set Playback Mode", "CueList", "Set playback mode", OSCTypes.Int,
-                               "/CueList/PlaybackMode", "{A, Mode, 0, Loop;Shuffle}")
-            self.osc.oscAction(self, "Set Timecode Source", "CueList", "Set timecode source", OSCTypes.Int,
-                               "/CueList/TimeCodeSource", "{A, Source, 0, None;Art-net;MIDI;SMPTE;System Time}")
+            self.osc.oscAction(self, "Set Playback Mode (LOOP/SHUFFLE)", "CueList", "Set playback mode", OSCTypes.Bool,# playback mode
+                               "/CueList/PlaybackMode", "{B, Mode, 0, 0;1, Loop;Shuffle}")      
+
+            self.osc.oscAction(self, "Set Playback State (0-STOP, 1-PAUSE, 2-PLAY)", "CueList", "Set playback state",
+                               OSCTypes.Bare, "/CueList/PlaybackState/{I, State, 0, 0, 2}")
+            self.osc.oscAction(self, "Set Timecode Source", "CueList", "Set timecode source", OSCTypes.String,
+                        "/CueList/TimeCodeSource", "{S, Source, SMPTE, None;Art-net;MIDI;SMPTE;System Time}") 
             self.osc.oscAction(self, "Next Timecode Source", "CueList", "Move to next timecode source", OSCTypes.Bare,
                                "/CueList/TimeCodeSource/Up")
             self.osc.oscAction(self, "Previous Timecode Source", "CueList", "Move to previous timecode source", OSCTypes.Bare,
@@ -156,7 +157,7 @@ class MADRIXIntegration(sp.BaseModule):
                 retry_interval=5
             )
 
-    def setup_feedback(self):
+    def setup_feedback(self): 
         self.osc.oscEntityReceiver(self, "Input Level Feedback", OSCTypes.Float, "/Audio/Input/Level", "Status/InputLevel")
         self.osc.oscEntityReceiver(self, "Output Level Feedback", OSCTypes.Float, "/Audio/Output/Level", "Status/OutputLevel")
         self.osc.oscEntityReceiver(self, "Master Level Feedback", OSCTypes.Int, "/Output/Master", "Status/MasterLevel")
