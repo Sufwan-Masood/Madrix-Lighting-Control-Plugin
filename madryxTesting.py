@@ -11,7 +11,7 @@ class MADRIXIntegration(sp.BaseModule):
         "name": "MADRIX Integration",
         "category": "Lighting Control",
         "description": "Control MADRIX lighting software via OSC",
-        "author": "STAGE PRECISION",
+        "author": "SUFWAN MASOOD",
         "keywords": "madrix, osc, lighting",
         "version": (1, 0),
         "spVersion": (1, 9, 0),
